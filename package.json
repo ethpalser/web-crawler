@@ -4,8 +4,12 @@
   "description": "Basic web-crawler using Node.js. Guided project from Boot.dev.",
   "main": "index.js",
   "scripts": {
-    "start": "node main.js"
+    "start": "node main.js",
+    "test": "jest"
   },
   "author": "Ethan Palser",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "jest": "^29.7.0"
+  }
 }
