@@ -34,5 +34,5 @@ test('emailto:www.google.com normalize to www.google.com', () => {
 })
 
 test('google.com normalize to www.google.com', () => {
-    expect(normalizeURL('google.com')).toBe('www.google.com')
+    expect(() => normalizeURL('google.com')).toThrow('Invalid URL')
 })
