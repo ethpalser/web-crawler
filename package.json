@@ -1,0 +1,11 @@
+{
+  "name": "web-crawler",
+  "version": "1.0.0",
+  "description": "Basic web-crawler using Node.js. Guided project from Boot.dev.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node main.js"
+  },
+  "author": "Ethan Palser",
+  "license": "ISC"
+}
