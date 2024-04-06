@@ -29,24 +29,41 @@ function getURLsFromHTML(htmlBody, baseURL) {
     return urls
 }
 
-async function crawlPage(currentURL) {
+async function crawlPage(baseURL, currentURL, pages) {
+    const objBaseURL = new URL(baseURL)
+    const objCurrentURL = new URL(currentURL)
+    if (objCurrentURL.hostname !== objBaseURL.hostname) {
+        return pages
+    }
+    const normCurrentURL = normalizeURL(currentURL)
+    if (pages[normCurrentURL] != null) {
+        pages[normCurrentURL]++
+        return pages
+    }
+    pages[normCurrentURL] = 1
+
+    console.log(`Crawling at url: ${currentURL}`)
     let resp = null
     try {
         resp = await fetch(currentURL, {method: 'GET'})
     } catch (err) {
         console.log(`${err.message}`)
-        return
+        return pages
     }
-    console.log(resp)
     if (resp.status >= 400) {
-        console.log(`An error occurred with status ${resp.status} at ${currentURL}`)
-        return
+        console.log(`The response from ${currentURL} returned status: ${resp.status}`)
+        return pages
     }
     if (!resp.headers.get('content-type').includes('text/html')) {
-        console.log(`Response from ${currentURL} is not HTML`)
-        return
+        console.log(`The response from ${currentURL} is not HTML`)
+        return pages
     }
-    return resp.text()
+    const body = await resp.text();
+    const nextURLs = getURLsFromHTML(body, baseURL)
+    for (const url of nextURLs) {
+        await crawlPage(baseURL, url, pages)
+    }
+    return pages
 }
 
 module.exports = { normalizeURL, getURLsFromHTML, crawlPage }

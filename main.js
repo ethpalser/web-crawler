@@ -1,7 +1,7 @@
 const { argv } = require('node:process')
 const { crawlPage } = require('./crawl.js')
 
-function main() {
+async function main() {
     if (argv.length < 3 || argv.length > 3) {
         console.error('Invalid arguments'
         + '\nOne and only one argument must be provided, as the base url to crawl'
@@ -18,8 +18,8 @@ function main() {
         return
     }
     console.log(`Running web crawler at ${baseURL}`)
-    const resp = crawlPage(baseURL)
-    console.log(resp)
+    const pages = await crawlPage(baseURL, baseURL, {})
+    console.log(pages)
 }
 
 main()
