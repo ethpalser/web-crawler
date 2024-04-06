@@ -29,4 +29,24 @@ function getURLsFromHTML(htmlBody, baseURL) {
     return urls
 }
 
-module.exports = { normalizeURL, getURLsFromHTML }
+async function crawlPage(currentURL) {
+    let resp = null
+    try {
+        resp = await fetch(currentURL, {method: 'GET'})
+    } catch (err) {
+        console.log(`${err.message}`)
+        return
+    }
+    console.log(resp)
+    if (resp.status >= 400) {
+        console.log(`An error occurred with status ${resp.status} at ${currentURL}`)
+        return
+    }
+    if (!resp.headers.get('content-type').includes('text/html')) {
+        console.log(`Response from ${currentURL} is not HTML`)
+        return
+    }
+    return resp.text()
+}
+
+module.exports = { normalizeURL, getURLsFromHTML, crawlPage }

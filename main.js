@@ -1,4 +1,5 @@
 const { argv } = require('node:process')
+const { crawlPage } = require('./crawl.js')
 
 function main() {
     if (argv.length < 3 || argv.length > 3) {
@@ -17,6 +18,8 @@ function main() {
         return
     }
     console.log(`Running web crawler at ${baseURL}`)
+    const resp = crawlPage(baseURL)
+    console.log(resp)
 }
 
 main()
