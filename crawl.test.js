@@ -47,7 +47,14 @@ test('html with one <a> tag will get one url', () => {
 
 test('html with two <a> tag will get two urls', () => {
     expect(getURLsFromHTML('<!DOCTYPE html>'
-    + '<a href="https://www.google.com/">To Google</a>'
+    + '<a href="https://www.google.com">To Google</a>'
     + '<a href="https://www.amazon.com/">To Amazon</a>)'))
-    .toBe(['www.google.com', 'www.amazon.com'])
+    .toBe(['https://www.google.com', 'https://www.amazon.com/'])
+})
+
+test('html with two relative URLs at https://www.google.com/ will get two urls', () => {
+    expect(getURLsFromHTML('<!DOCTYPE html>'
+    + '<a href="/account">To Google Account</a>'
+    + '<a href="/support">To Google Support</a>)'))
+    .toBe(['https://www.google.com/account', 'https://www.google.com/support'])
 })
