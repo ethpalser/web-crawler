@@ -11,4 +11,8 @@ function normalizeURL(url) {
     }
 }
 
-module.exports = { normalizeURL }
+function getURLsFromHTML(html) {
+    return null
+}
+
+module.exports = { normalizeURL, getURLsFromHTML }
